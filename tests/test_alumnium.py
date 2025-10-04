@@ -16,8 +16,9 @@ def test_service_now(my_page):
     al.do("click Favorites on top nav, and click 'incidents' menu item")
     al.check("page title contains Incidents")
 
-    # al.do("click 'New' button on top right of nav bar")
-    my_page.click("button:has-text('New', exact=True)")  # AI is facing hard timeto find this button
+    # al.check("'New' button on top right of nav bar inside the iframe 'Main Content' is visible")
+    my_page.frame_locator("iframe[title='Main Content']").get_by_text("New").click()  # AI is facing hard time to find this button
+    
     al.check("text 'New record' present in top left")
     al.do("fill in the 'short description' with 'Test incident from alumnium'")
     al.do("set the 'Urgency' to '1 - High'")    
