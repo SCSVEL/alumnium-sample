@@ -1,8 +1,11 @@
-import pytest
+from playwright.sync_api import sync_playwright
+from pytest import fixture
 
-# You can add common fixtures here for all tests in the tests/ directory.
-
-@pytest.fixture(scope="session")
-def example_fixture():
-    # Example fixture, replace or extend as needed
-    return "This is a session-scoped fixture."
+@fixture(scope="session")
+def my_page():
+    page = sync_playwright().start().chromium.launch(headless=False).new_page()
+    yield page
+    page.context.close()
+    page.browser.close()
+    sync_playwright().stop()
+    
